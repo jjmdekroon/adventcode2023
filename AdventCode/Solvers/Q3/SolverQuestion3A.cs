@@ -5,9 +5,8 @@ using System.Text.RegularExpressions;
 
 namespace AdventCode.Solvers.Q3;
 
-public class SolverQuestion3A : SolverBase, ISolver
+public class SolverQuestion3A : SolverQuestion3ABase, ISolver
 {
-    private Matrix? _matrix;
     public string SolveQuestion()
     {
         // Create matrix of chars
@@ -18,12 +17,12 @@ public class SolverQuestion3A : SolverBase, ISolver
 
 
         OpenFile();
-        WriteToFile(_matrix?.ContentToString());
+        WriteToFile(_matrix.ContentToString());
 
         // Check perimeter of Number
         foreach (var matrixNumber in matrixNumbers)
         {
-            if (NumberPerimeterWalker.NumberHasSymbolLink(_matrix, matrixNumber))
+            if (NumberPerimeterWalker.NumberHasSymbolLink(_matrix, matrixNumber, NumberPerimeterWalker.CheckForValidChar))
             {
                 var nr = matrixNumber.Number;
                 _matrix?.ReplaceMatrixNumberChars(matrixNumber.Point.X, matrixNumber.Point.Y, matrixNumber.Length, '-');
@@ -31,7 +30,7 @@ public class SolverQuestion3A : SolverBase, ISolver
             }
         }
 
-        WriteToFile(_matrix?.ContentToString());
+        WriteToFile(_matrix.ContentToString());
         CloseFile();
 
         var answer = 0;
@@ -42,8 +41,6 @@ public class SolverQuestion3A : SolverBase, ISolver
                 answer += matrixNumber.Number;
             }
         }
-        // If no symbox remove number
-        // Add all numbers in Matrix
 
         return answer.ToString();
     }
@@ -68,37 +65,5 @@ public class SolverQuestion3A : SolverBase, ISolver
         }
 
         return numbers;
-    }
-
-    private void CreateMatrix()
-    {
-        var arrayWidth = GetArrayLengthFromFirstLine();
-        var arrayLength = _input.Length;
-
-        _matrix = new Matrix(arrayWidth, arrayLength);
-        var indexY = 0;
-        foreach(var line in _input)
-        {
-            var lineCharArray = line.ToCharArray(0, arrayWidth);
-            int indexX = 0;
-            foreach(char c in lineCharArray)
-            {
-                _matrix.SetAt(indexX, indexY, c);
-                indexX++;
-            }
-
-            indexY++;
-        }
-    }
-
-    private int GetArrayLengthFromFirstLine()
-    {
-        var firstLine = _input.FirstOrDefault();
-        if (firstLine is null)
-        {
-            return 0;
-        }
-
-        return firstLine.ToArray().Length;
     }
 }
