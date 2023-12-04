@@ -35,10 +35,11 @@ internal class SolverQuestion1B : SolverBase, ISolver
 
     public string SolveQuestion()
     {
-        string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Question1B.txt"));
+        OpenFile();
+
         var answer = 0;
-        outputFile.WriteLine($"line;newine;number");
+
+        WriteToFile("line;newine;number");
 
         foreach (var line in _input)
         {
@@ -46,8 +47,10 @@ internal class SolverQuestion1B : SolverBase, ISolver
             var number = LineToNumber(newLine);
             answer += number;
 
-            outputFile.WriteLine($"{line};{newLine};{number}");
+            WriteToFile($"{line};{newLine};{number}");
         }
+
+        CloseFile();
 
         return answer.ToString();
     }

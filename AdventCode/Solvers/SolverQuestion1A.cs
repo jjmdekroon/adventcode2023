@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace AdventCode.Solvers;
+﻿namespace AdventCode.Solvers;
 
 public class SolverQuestion1A : SolverBase, ISolver
 {

@@ -2,12 +2,32 @@
 
 public class SolverBase
 {
+    private StreamWriter? _output;
+
     protected string[] _input = Array.Empty<string>();
+    
 
     public void SetInput(string input)
     {
         _input = input.Split(Environment.NewLine);
     }
+
+    protected void OpenFile()
+    {
+        string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        _output = new StreamWriter(Path.Combine(docPath, $"QuestionResult.csv"));
+    }
+
+    protected void WriteToFile(string line)
+    {
+        _output?.WriteLine(line);
+    }
+
+    protected void CloseFile()
+    {
+        _output?.Close();
+    }
+
 
     protected static int LineToNumber(string line)
     {
@@ -62,7 +82,7 @@ public class SolverBase
         var foundPosition = -1;
         foreach (var item in stringGroup)
         {
-            var positionInString = line.IndexOf(item);
+            var positionInString = line.LastIndexOf(item);
             if (positionInString >= 0 && positionInString > foundPosition)
             {
                 foundText = item;
