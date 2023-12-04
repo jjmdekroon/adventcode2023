@@ -4,11 +4,13 @@ public class SolverBase
 {
     private StreamWriter? _output;
 
+    protected string _originalInput = string.Empty;
     protected string[] _input = Array.Empty<string>();
-    
+
 
     public void SetInput(string input)
     {
+        _originalInput = input;
         _input = input.Split(Environment.NewLine);
     }
 

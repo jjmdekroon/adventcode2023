@@ -1,4 +1,5 @@
 ﻿using AdventCode.Solvers;
+using AdventCode.Solvers.Q3;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,14 +55,7 @@ namespace AdventCode
 
         private ISolver? CreateSolverForQuestion(Question question)
         {
-            return question switch
-            {
-                Question.Question_1_A => new SolverQuestion1A(),
-                Question.Question_1_B => new SolverQuestion1B(),
-                Question.Question_2_A => new SolverQuestion2A(),
-                Question.Question_2_B => new SolverQuestion2B(),
-                _ => null
-            };
+            return SolverFactory.CreateSolver(question);
         }
     }
 }
