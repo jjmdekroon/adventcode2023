@@ -57,5 +57,10 @@ namespace AdventCode
         {
             return SolverFactory.CreateSolver(question);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cbSelection.SelectedIndex = cbSelection.Items.Count - 1;
+        }
     }
 }

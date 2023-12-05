@@ -1,5 +1,6 @@
 ﻿using AdventCode.Solvers.Q3;
 using AdventCode.Solvers.Q4;
+using AdventCode.Solvers.Q5;
 
 namespace AdventCode.Solvers;
 
@@ -20,6 +21,8 @@ public static  class SolverFactory
 
             Question.Question_4_A => new SolverQuestion4A(),
             Question.Question_4_B => new SolverQuestion4B(),
+
+            Question.Question_5_A => new SolverQuestion5A(),
             _ => null
         };
     }
