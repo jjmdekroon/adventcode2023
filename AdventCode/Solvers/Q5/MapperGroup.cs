@@ -38,5 +38,11 @@ namespace AdventCode.Solvers.Q5
 
             return destination;
         }
+
+
+        public long[] MapRange(long start, long range)
+        {
+            return [];
+        }
     }
 }

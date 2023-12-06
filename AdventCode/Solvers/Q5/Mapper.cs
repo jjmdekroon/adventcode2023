@@ -6,7 +6,7 @@ public class Mapper
 {
     public long Source { get; private set; }
     public long Destination { get; private set; }
-    public long Count { get; private set; }
+    public long RangeLength { get; private set; }
 
     public Mapper(string inputLine)
     {
@@ -17,12 +17,12 @@ public class Mapper
 
         Source = long.Parse(items[1]);
         Destination = long.Parse(items[0]);
-        Count = long.Parse(items[2]);
+        RangeLength = long.Parse(items[2]);
     }
 
     public long Map(long key)
     {
-        if (key >= Source && key < Source + Count)
+        if (key >= Source && key < Source + RangeLength)
         {
             // within range so map it
             var delta = key - Source;

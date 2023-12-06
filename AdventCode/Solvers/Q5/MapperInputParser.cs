@@ -1,12 +1,8 @@
 ﻿namespace AdventCode.Solvers.Q5;
 
-public class InputParser
+public class MapperInputParser
 {
-    private int _lineNumber = 0;
     private MapperGroup _currentMappeGroup = null!;
-    
-    public  List<long> Seeds { get; private set; } = [];
-
     public List<MapperGroup> MapperGroups { get; private set; } = [];
 
     // Reads and parses the data
@@ -14,33 +10,6 @@ public class InputParser
     // 2..n) the mapper group data
     //       contains: header + data(source, dest, count)
     public void Parse(string line)
-    {
-        if (string.IsNullOrEmpty(line))
-        {
-            // Discard empty lines
-            return;
-        }
-
-        _lineNumber++;
-        if (_lineNumber == 1)
-        {
-            var headerSplit = line.Split(':');
-            string seedsLine = headerSplit[1].Trim();
-
-            Seeds = seedsLine
-                .Split(' ')
-                .Where(s => !string.IsNullOrEmpty(s))
-                .Select(s => long.Parse(s))
-                .ToList();
-            
-            return;
-        }
-
-        ParseMappingData(line);
-    }
-
-
-    private void ParseMappingData(string line)
     {
         if (line.Contains(':'))
         {
@@ -51,6 +20,11 @@ public class InputParser
             _currentMappeGroup = new MapperGroup(header);
             MapperGroups.Add(_currentMappeGroup);
             return;
+        }
+
+        if (_currentMappeGroup is null)
+        {
+            throw new ApplicationException("No current mapper");
         }
 
         var mapper = new Mapper(line);
