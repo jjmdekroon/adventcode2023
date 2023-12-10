@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Collections.Generic;
+
 namespace AdventCode.Solvers.Q5
 {
     public class MapperGroup
@@ -40,9 +43,27 @@ namespace AdventCode.Solvers.Q5
         }
 
 
-        public long[] MapRange(long start, long range)
+        public List<(long, long)> MapRange(List<(long, long )> ranges)
         {
-            return [];
+            var result = new List<(long, long)>();
+            var tempList = new List<(long, long)>();
+
+            result.AddRange(ranges);
+
+            foreach (var mapper in _mappers)
+            {
+                tempList.Clear();
+                tempList.AddRange(result);
+
+                result.Clear();
+                foreach (var range in tempList)
+                {
+                    var mappedRanges = mapper.MapRange(range.Item1, range.Item2);
+                    result.AddRange(mappedRanges);
+                }
+            }
+
+            return result;
         }
     }
 }

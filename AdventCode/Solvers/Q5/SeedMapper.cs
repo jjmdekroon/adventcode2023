@@ -36,4 +36,30 @@ internal class SeedMapper
 
         return location;
     }
+
+    public List<(long,long)> MapToLocationByRange(long seedStart, long length)
+    {
+        var mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("seed")).First();
+        var soil = mapperGroup.MapRange([(seedStart, length)]);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("soil")).First();
+        var fertilizer = mapperGroup.MapRange(soil);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("fertilizer")).First();
+        var water = mapperGroup.MapRange(fertilizer);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("water")).First();
+        var light = mapperGroup.MapRange(water);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("light")).First();
+        var temperature = mapperGroup.MapRange(light);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("temperature")).First();
+        var humidity = mapperGroup.MapRange(temperature);
+
+        mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("humidity")).First();
+        var location = mapperGroup.MapRange(humidity);
+
+        return location;
+    }
 }

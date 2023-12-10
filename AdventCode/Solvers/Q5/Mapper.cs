@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.Logging;
+using System.Collections.Generic;
 
 namespace AdventCode.Solvers.Q5;
 
@@ -6,7 +7,7 @@ public class Mapper
 {
     public long Source { get; private set; }
     public long Destination { get; private set; }
-    public long RangeLength { get; private set; }
+    public long Length { get; private set; }
 
     public Mapper(string inputLine)
     {
@@ -17,12 +18,12 @@ public class Mapper
 
         Source = long.Parse(items[1]);
         Destination = long.Parse(items[0]);
-        RangeLength = long.Parse(items[2]);
+        Length = long.Parse(items[2]);
     }
 
     public long Map(long key)
     {
-        if (key >= Source && key < Source + RangeLength)
+        if (key >= Source && key < Source + Length)
         {
             // within range so map it
             var delta = key - Source;
@@ -31,5 +32,15 @@ public class Mapper
 
         // No mapping needed.... return the same value
         return key;
+    }
+
+    public List<(long, long)> MapRange(long start, long length)
+    {
+        var lijstVanRanges = new List<(long, long)>();
+
+        // AAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHH
+        // I GIVE UP
+
+        return lijstVanRanges;
     }
 }

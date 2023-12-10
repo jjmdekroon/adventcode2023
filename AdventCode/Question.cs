@@ -13,6 +13,11 @@ public enum Question
     Question_4_A,
     Question_4_B,
     Question_5_A,
+    Question_5_B,
     Question_6_A,
-    Question_6_B
+    Question_6_B,
+    Question_7_A,
+    Question_8_A,
+    Question_8_B,
+    Question_9_A
 }

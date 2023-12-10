@@ -19,7 +19,9 @@ public class SolverQuestion5A : SolverBase, ISolver
 
             if (firstInputLine)
             {
+                firstInputLine = false;
                 seedsInputParser.Parse(line);
+                continue;
             }
 
             mapperInputParser.Parse(line);

@@ -11,7 +11,10 @@ public class SolverBase
     public void SetInput(string input)
     {
         _originalInput = input;
-        _input = input.Split(Environment.NewLine);
+        _input = input
+            .Split(Environment.NewLine)
+            .Where(l => !string.IsNullOrEmpty(l))
+            .ToArray();
     }
 
     protected void OpenFile()
