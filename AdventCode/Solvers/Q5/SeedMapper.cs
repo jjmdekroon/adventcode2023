@@ -37,10 +37,12 @@ internal class SeedMapper
         return location;
     }
 
-    public List<(long,long)> MapToLocationByRange(long seedStart, long length)
+    public List<Range> MapToLocationByRange(long seedStart, long length)
     {
+        var ranges = new List<Range>() { new(seedStart, length, false) };
+
         var mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("seed")).First();
-        var soil = mapperGroup.MapRange([(seedStart, length)]);
+        var soil = mapperGroup.MapRange(ranges);
 
         mapperGroup = _mapperGroups.Where(g => g.SourceName.Equals("soil")).First();
         var fertilizer = mapperGroup.MapRange(soil);

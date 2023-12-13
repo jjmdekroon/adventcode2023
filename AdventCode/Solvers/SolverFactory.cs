@@ -38,6 +38,7 @@ public static  class SolverFactory
             Question.Question_8_B => new SolverQuestion8B(),
 
             Question.Question_9_A => new SolverQuestion9A(),
+            Question.Question_9_B => new SolverQuestion9B(),
 
             _ => null
         };

@@ -1,9 +1,8 @@
-﻿using System.CodeDom;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace AdventCode.Solvers.Q9;
 
-public class SolverQuestion9A : SolverBase, ISolver
+public class SolverQuestion9B : SolverBase, ISolver
 {
     public string SolveQuestion()
     {
@@ -16,7 +15,7 @@ public class SolverQuestion9A : SolverBase, ISolver
             var step1 = line.Trim().Split(' ').ToList();
             var step2 = step1.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             var items = step2.Select(x => int.Parse(x.Trim())).ToArray();
-            var predictedValue = items[items.Length - 1];
+            var predictedValue = items[0];
             List<int> checkItems = [];
             do
             {
@@ -26,7 +25,7 @@ public class SolverQuestion9A : SolverBase, ISolver
                     checkItems.Add(items[i + 1] - items[i]);
                 }
 
-                predictedValue += checkItems[checkItems.Count - 1];
+                predictedValue -= checkItems[0];
 
                 items = checkItems.ToArray();
 

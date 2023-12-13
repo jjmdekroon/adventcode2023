@@ -27,16 +27,16 @@ public class SolverQuestion5B : SolverBase, ISolver
             mapperInputParser.Parse(line);
         }
 
-        var answer = 0L;
+        var answer = long.MaxValue;
         var mapper = new SeedMapper(mapperInputParser.MapperGroups);
         foreach (var seedRange in seedsInputParser.SeedRanges)
         {
             var locations = mapper.MapToLocationByRange(seedRange.Item1, seedRange.Item2);
             foreach (var location in locations)
             {
-                if (location.Item1 < answer)
+                if (location.Start != 0 && location.Start < answer)
                 {
-                    answer = location.Item1;
+                    answer = location.Start;
                 }
             }
         }

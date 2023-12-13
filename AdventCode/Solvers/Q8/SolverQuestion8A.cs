@@ -1,4 +1,5 @@
-﻿namespace AdventCode.Solvers.Q8;
+﻿
+namespace AdventCode.Solvers.Q8;
 
 public class SolverQuestion8A : SolverBase, ISolver
 {
@@ -24,7 +25,9 @@ public class SolverQuestion8A : SolverBase, ISolver
             searchList.Add(from, (toLR[0].Trim(), toLR[1].Trim()));
         }
 
-        int steps = 0;
+        var steps = StepFinder.Search("AAA", searchList, commands);
+
+        /*int steps = 0;
         int index = 0;
         string key = "AAA";
         do
@@ -43,8 +46,9 @@ public class SolverQuestion8A : SolverBase, ISolver
 
             steps++;
 
-        } while (!key.Equals("ZZZ"));
+        } while (!key.Equals("ZZZ"));*/
 
         return steps.ToString();
     }
+
 }

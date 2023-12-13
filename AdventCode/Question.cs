@@ -19,5 +19,6 @@ public enum Question
     Question_7_A,
     Question_8_A,
     Question_8_B,
-    Question_9_A
+    Question_9_A,
+    Question_9_B
 }

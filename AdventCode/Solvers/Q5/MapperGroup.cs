@@ -43,10 +43,12 @@ namespace AdventCode.Solvers.Q5
         }
 
 
-        public List<(long, long)> MapRange(List<(long, long )> ranges)
+        public List<Range> MapRange(List<Range> ranges)
         {
-            var result = new List<(long, long)>();
-            var tempList = new List<(long, long)>();
+            ranges.ForEach(x => x.ResetAlreadyConverted());
+
+            var result = new List<Range>();
+            var tempList = new List<Range>();
 
             result.AddRange(ranges);
 
@@ -54,11 +56,13 @@ namespace AdventCode.Solvers.Q5
             {
                 tempList.Clear();
                 tempList.AddRange(result);
-
                 result.Clear();
-                foreach (var range in tempList)
+                foreach (var range in tempList.Where(x => x.Length > 0).ToList())
                 {
-                    var mappedRanges = mapper.MapRange(range.Item1, range.Item2);
+                    var mappedRanges = range.IsAlreadyConverted
+                        ? [range]
+                        : mapper.MapRange(range);
+
                     result.AddRange(mappedRanges);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace AdventCode.Solvers.Q8;
 
@@ -26,7 +27,7 @@ public class SolverQuestion8B : SolverBase, ISolver
             searchList.Add(from, (toLR[0].Trim(), toLR[1].Trim()));
         }
 
-        int steps = 0;
+        // Search start key's
         int index = 0;
         var keysEndingWithA = searchList.Where(s => s.Key.EndsWith('A')).ToList();
         Dictionary<string, string> fromToKeyList = [];
@@ -35,36 +36,44 @@ public class SolverQuestion8B : SolverBase, ISolver
             fromToKeyList.Add(item.Key, item.Key);
         }
 
-        var endsSearch = true;
-        do
+        // Find extra steps to be taken for every start key
+        ulong minimalSteps = int.MaxValue;
+        ulong deltaSteps = 0;
+        var cycles = new List<ulong>();
+        var foundDeltas = new List<ulong>();
+        foreach (var item in keysEndingWithA)
         {
-            var command = commands[index++];
-            if (index == commands.Length)
+            (var initialSteps, deltaSteps) = StepFinder.Search(item.Key, searchList, commands);
+            if (initialSteps < minimalSteps)
             {
-                index = 0;
+                minimalSteps = initialSteps;
             }
+            cycles.Add(initialSteps);
+            foundDeltas.Add(deltaSteps);
+        }
 
-            var newFromToKeyList = new Dictionary<string, string>();
-            endsSearch = true;
-            foreach (var item in fromToKeyList)
-            {
-                var step = searchList[item.Value];
+        // Search minimal value for divider
+        var answer =  foundDeltas.First();
+        for (int i = 1; i < foundDeltas.Count; i++)
+        {
+            var val2 = foundDeltas[i];
+            answer = Kgv(answer, val2);
+        }
 
-                var nextKey = command == 'L'
-                    ? step.Item1
-                    : step.Item2;
 
-                newFromToKeyList.Add(item.Value, nextKey);
-                
-                endsSearch &= nextKey.EndsWith('Z');
-            }
+        return answer.ToString();
+    }
 
-            fromToKeyList = newFromToKeyList;
+    private static ulong Kgv(ulong a, ulong b)
+    {
+        var ggd = GGD(a, b);
+        return (a * b) / ggd;
+    }
 
-            steps++;
-
-        } while (!endsSearch);
-
-        return steps.ToString();
+    public static ulong GGD(ulong a, ulong b)
+    {
+        return b == 0
+            ? a
+            : GGD(b, a % b);
     }
 }
